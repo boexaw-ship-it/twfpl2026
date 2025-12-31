@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TW FPL Myanmar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#007bff">
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: #eee;
+  text-align: center;
+}
+
+header {
+  background-color: #007bff;
+  padding: 12px 0;
+}
+header h1 {
+  margin: 0;
+  color: #fff;
+}
+
+/* NAV CARDS */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 30px 0;
+  gap: 20px;
+}
+.card {
+  background-color: #1e1e1e;
+  border: 2px solid #00d4ff;
+  border-radius: 12px;
+  width: 150px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #00d4ff;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.3s;
+}
+.card:hover {
+  background-color: #00d4ff;
+  color: #121212;
+}
+
+/* DASHBOARD */
+.section-dashboard {
+  padding: 20px 15px;
+}
+.dashboard-table {
+  width: 90%;
+  max-width: 800px;
+  margin: auto;
+  border-collapse: collapse;
+}
+.dashboard-table th,
+.dashboard-table td {
+  border: 1px solid #2a2a2a;
+  padding: 10px;
+}
+.dashboard-table th {
+  background-color: #007bff;
+  color: #fff;
+}
+.dashboard-table tr:nth-child(even) {
+  background-color: #1e1e1e;
+}
+
+/* ANNOUNCEMENT */
+.announcement {
+  margin: 30px;
+}
+#messageBox {
+  background: #1e1e1e;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  min-height: 60px;
+}
+input {
+  padding: 10px;
+  width: 70%;
+  max-width: 300px;
+}
+button {
+  padding: 10px 16px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+footer {
+  background: #007bff;
+  padding: 15px;
+  margin-top: 30px;
+  color: #fff;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>TW FPL Fantasy Premier League</h1>
+</header>
+
+<div class="card-container">
+  <a href="index.html" class="card">🏠 Home</a>
+  <a href="news.html" class="card">📰 News</a>
+  <a href="highlights.html" class="card">🎬 Highlights</a>
+  <a href="register.html" class="card">📝 Register</a>
+</div>
+
+<section class="section-dashboard">
+  <h2>Winner 🏆 & Runners</h2>
+
+  <table class="dashboard-table">
+    <thead>
+      <tr>
+        <th>Week</th>
+        <th>Winner</th>
+        <th>Runner Up</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>T1MO</td><td>Dream Team of gipsy</td></tr>
+      <tr><td>2</td><td>Irrawaddy dolphin Fc</td><td>Pyone Cho</td></tr>
+      <tr><td>3</td><td>Pyone Cho</td><td>T1MO</td></tr>
+      <tr><td>4</td><td>42 Galaxy</td><td>Irrawaddy dolphin Fc</td></tr>
+      <tr><td>5</td><td>The FPL Hacker</td><td>Pyone Cho</td></tr>
+      <tr><td>6</td><td>gangja</td><td>Model Fc</td></tr>
+      <tr><td>7</td><td>Payitt Kyaw</td><td>Dream Team of gipsy</td></tr>
+      <tr><td>8</td><td>42 Galaxy</td><td>Cityloft United</td></tr>
+      <tr><td>9</td><td>Arsenal Myanmar Htun</td><td>MarnteTa</td></tr>
+      <tr><td>10</td><td>42 Galaxy</td><td>Latt kyee nak</td></tr>
+      <tr><td>11</td><td>Irrawaddy dolphin Fc</td><td>Arkira Waithar FC</td></tr>
+      <tr><td>12</td><td>Latt kyee nak</td><td>Gunner SoeLT</td></tr>
+      <tr><td>13</td><td>Lightning McKing11</td><td>Model Fc</td></tr>
+      <tr><td>14</td><td>Payitt Kyaw</td><td>MTA FC</td></tr>
+      <tr><td>15</td><td>42 Galaxy</td><td>MTA FC</td></tr>
+      <tr><td>16</td><td>Payitt Kyaw</td><td>Irrawaddy dolphin Fc</td></tr>
+      <tr><td>17</td><td>T1MO</td><td>Latt kyee nak</td></tr>
+      <tr><td>18</td><td>Hankodanki</td><td>CityLoft United</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="announcement">
+  <h2>Announcement</h2>
+  <div id="messageBox">Welcome to TW FPL!</div>
+  <input type="text" id="newMessage" placeholder="Type your message...">
+  <button onclick="sendMessage()">Send</button>
+</section>
+
+<footer>
+  © 2026 TW FPL
+</footer>
+
+<script>
+function sendMessage() {
+  const box = document.getElementById("messageBox");
+  const input = document.getElementById("newMessage");
+
+  if (input.value.trim() !== "") {
+    box.innerHTML += "<br>• " + input.value;
+    input.value = "";
+
+    setTimeout(() => {
+      box.innerHTML = "Welcome to TW FPL!";
+    }, 2 * 60 * 60 * 1000);
+  }
+}
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js");
+  });
+}
+</script>
+
+</body>
+</html>

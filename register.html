@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TW FPL Register</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#0f0f0f;
+  color:#fff;
+}
+
+/* HEADER */
+header{
+  padding:15px;
+  text-align:center;
+  border-bottom:1px solid #222;
+}
+header h1{
+  margin:0;
+  color:#00ffcc;
+}
+nav{
+  margin-top:10px;
+}
+nav a{
+  color:#ccc;
+  margin:0 10px;
+  text-decoration:none;
+}
+nav a:hover{
+  color:#00ffcc;
+}
+
+/* REGISTER SECTION */
+.section-register{
+  display:flex;
+  justify-content:center;
+  padding:30px 15px;
+}
+
+.register-card{
+  width:100%;
+  max-width:420px;
+  background:#141414;
+  border:1px solid #2a2a2a;
+  border-radius:14px;
+  padding:25px;
+  box-shadow:0 0 25px rgba(0,255,204,0.15);
+}
+
+.register-card h2{
+  text-align:center;
+  margin-bottom:20px;
+  color:#00ffcc;
+}
+
+/* FORM */
+label{
+  display:block;
+  margin-top:15px;
+  font-size:14px;
+  color:#aaa;
+}
+
+input, select{
+  width:100%;
+  margin-top:6px;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #333;
+  background:#0f0f0f;
+  color:#fff;
+  font-size:14px;
+}
+
+input:focus, select:focus{
+  outline:none;
+  border-color:#00ffcc;
+}
+
+/* FILE */
+input[type="file"]{
+  padding:8px;
+  background:#0f0f0f;
+}
+
+/* BUTTON */
+button{
+  width:100%;
+  margin-top:22px;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(135deg,#00ffcc,#0099ff);
+  color:#000;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:0.9;
+}
+
+/* STATUS */
+.status{
+  margin-top:15px;
+  text-align:center;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>TW FPL</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="news.html">News</a>
+    <a href="highlights.html">Highlights</a>
+    <a href="register.html">Register</a>
+  </nav>
+</header>
+
+<section class="section-register">
+  <div class="register-card">
+    <h2>Register Your Team</h2>
+
+    <form id="registerForm">
+      <label>Team Name</label>
+      <input type="text" name="teamName" required placeholder="Eg. TW United">
+
+      <label>Manager Name</label>
+      <input type="text" name="managerName" required placeholder="Your name">
+
+      <label>Phone Number</label>
+      <input type="text" name="phone" placeholder="09xxxxxxxx">
+
+      <label>Fee Paid</label>
+      <select name="fee">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+
+      <label>Team Logo (Upload)</label>
+      <input type="file" id="logo" accept="image/*" required>
+
+      <button type="submit">Submit Registration</button>
+    </form>
+
+    <div id="status" class="status"></div>
+  </div>
+</section>
+
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbwUEBT0hyFriyC3TaXgP0lHmPZkpS-8kV6GbwGLY738Yq4WSd5NxaeIa7zT36HBtNsI/exec"; // 🔴 Web App URL ထည့်
+const form = document.getElementById("registerForm");
+const statusDiv = document.getElementById("status");
+
+form.addEventListener("submit", function(e){
+  e.preventDefault();
+  statusDiv.style.color = "#ccc";
+  statusDiv.innerText = "Uploading...";
+
+  const file = document.getElementById("logo").files[0];
+  const reader = new FileReader();
+
+  reader.onloadend = async function(){
+    const base64 = reader.result.split(",")[1];
+    const data = new FormData(form);
+    data.append("logo", base64);
+
+    try{
+      const res = await fetch(scriptURL, {
+        method: "POST",
+        body: data
+      });
+      const text = await res.text();
+      statusDiv.innerText = text;
+      statusDiv.style.color = text.includes("Success") ? "#00ffcc" : "red";
+      if(text.includes("Success")) form.reset();
+    }catch(err){
+      statusDiv.innerText = "Upload failed";
+      statusDiv.style.color = "red";
+    }
+  };
+
+  reader.readAsDataURL(file);
+});
+</script>
+
+</body>
+</html>
